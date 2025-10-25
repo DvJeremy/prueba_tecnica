@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Product;
+use App\Models\Order;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,11 +17,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // usuarios
+        $users = User::factory(5)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // productos
+        $products = Product::factory(20)->create();
+
+        // ordenes para cada usuario
+        $users->each(function ($user) use ($products) {
+            $orders = Order::factory(2)->create([
+                'user_id' => $user->id,
+            ]);
+
+            // para cada orden productos aleatorios
+            $orders->each(function ($order) use ($products) {
+                $selectedProducts = $products->random(rand(2, 5));
+
+                foreach ($selectedProducts as $product) {
+                    $quantity = rand(1, 3);
+                    $subtotal = $product->price * $quantity;
+
+                    $order->products()->attach($product->id, [
+                        'quantity' => $quantity,
+                        'subtotal' => $subtotal,
+                    ]);
+                }
+
+                $order->total = $order->products->sum('pivot.subtotal');
+                $order->save();
+            });
+        });
     }
 }
