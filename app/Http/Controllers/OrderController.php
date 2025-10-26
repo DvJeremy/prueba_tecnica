@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Jobs\OrderJob;
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
 use App\Models\Product;
@@ -45,6 +45,9 @@ class OrderController extends Controller
         // Guardar total
         $order->total = $total;
         $order->save();
+
+        // disparar JOB al confirmar un pedido
+        OrderJob::dispatch($order);
 
         // Devolver pedido
         return response()->json($order->load('products'));
