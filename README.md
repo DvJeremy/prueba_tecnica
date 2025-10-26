@@ -44,16 +44,10 @@ DB_DATABASE=marketplace
 DB_USERNAME=root
 DB_PASSWORD=
 
-
-4. Genera la key de la aplicación:
-
-php artisan key:generate
-
-
-5. Ejecuta las migraciones y seeders:
+4. Ejecuta las migraciones y seeders:
 
 php artisan migrate --seed
 
-6. Ejecutar la aplicación localmente
+5. Ejecutar la aplicación localmente
 
 php artisan serve
