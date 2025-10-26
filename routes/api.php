@@ -10,7 +10,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('products', ProductController::class);
-Route::post('orders', [OrderController::class, 'CreateOrder']);
-Route::get('top-5-products', [ReportController::class, 'top5Selling']);
-Route::get('user-orders', [ReportController::class, 'userOrders']);
+Route::middleware('auth:sanctum')->apiResource('products', ProductController::class);
+Route::middleware('auth:sanctum')->post('orders', [OrderController::class, 'CreateOrder']);
+Route::middleware('auth:sanctum')->get('top-5-products', [ReportController::class, 'top5Selling']);
+Route::middleware('auth:sanctum')->get('user-orders', [ReportController::class, 'userOrders']);

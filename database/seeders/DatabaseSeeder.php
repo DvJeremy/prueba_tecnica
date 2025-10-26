@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
         // usuarios
         $users = User::factory(5)->create();
 
+        $firstUser = $users->first();
+        $token = $firstUser->createToken('api-token')->plainTextToken;
+        $this->command->info("Token para el primer usuario: $token");
+
         // productos
         $products = Product::factory(20)->create();
 
