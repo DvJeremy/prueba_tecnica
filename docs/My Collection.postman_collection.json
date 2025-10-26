@@ -1,0 +1,334 @@
+{
+	"info": {
+		"_postman_id": "56ca250a-ba62-42f0-85c6-95df5cb65dcf",
+		"name": "My Collection",
+		"description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49548470",
+		"_collection_link": "https://jeremy-amazing-it-123266.postman.co/workspace/jeremy-bustamante-rojas's-Works~f0daab9e-3e74-4345-8bd9-883ad28a14e1/collection/49548470-56ca250a-ba62-42f0-85c6-95df5cb65dcf?action=share&source=collection_link&creator=49548470"
+	},
+	"item": [
+		{
+			"name": "/api/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 1|jTQbFzImnmE5xwB1TEgkDLg9C2S1AlSfQkkdHjpTefec5ecb",
+						"type": "text"
+					},
+					{
+						"key": "min_price",
+						"value": "500",
+						"type": "text"
+					},
+					{
+						"key": "max_price",
+						"value": "1500",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/products",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products"
+					]
+				},
+				"description": "## **Endpoint: Listar productos (****`GET /api/products`****)**\n\n**Descripción:**\n\nDevuelve una lista de todos los productos, con la opción de filtrar por precio y ordenar por stock.\n\n**URL:**\n\n```\n/api/products\n\n ```\n\n**Método HTTP:**  \n`GET`\n\n**Middleware / Autenticación:**  \n`auth:sanctum` – requiere token válido (Bearer token).\n\n**Parámetros Query Opcionales:**\n\n| Parámetro | Tipo | Descripción |\n| --- | --- | --- |\n| `min_price` | numeric | Devuelve productos con precio mayor o igual a este valor |\n| `max_price` | numeric | Devuelve productos con precio menor o igual a este valor |\n| `order_stock` | string (`asc` o `desc`) | Ordena los productos según la cantidad en stock |\n\n**Ejemplo de Request (Postman):**\n\n```\nGET http://127.0.0.1:8000/api/products?min_price=10&max_price=100&order_stock=desc\nHeaders:\nAuthorization: Bearer 1|jTQbFzImnmE5xwB1TEgkDLg9C2S1AlSfQkkdHjpTefec5ecb\n\n ```\n\n**Ejemplo de Response 200 OK:**\n\n```\n[\n    {\n        \"id\": 2,\n        \"name\": \"ea voluptas\",\n        \"price\": \"1962.84\",\n        \"stock\": 27,\n        \"created_at\": \"2025-10-26T04:29:16.000000Z\",\n        \"updated_at\": \"2025-10-26T04:29:16.000000Z\"\n    },\n    {\n        \"id\": 3,\n        \"name\": \"Producto B\",\n        \"price\": \"50.00\",\n        \"stock\": 12,\n        \"created_at\": \"2025-10-26T04:30:00.000000Z\",\n        \"updated_at\": \"2025-10-26T04:30:00.000000Z\"\n    }\n]\n\n ```\n\n**Códigos de Respuesta:**\n\n| Código | Descripción |\n| --- | --- |\n| 200 OK | Lista de productos retornada correctamente |\n| 401 Unauthorized | Token faltante o inválido |"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/products",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 1|jTQbFzImnmE5xwB1TEgkDLg9C2S1AlSfQkkdHjpTefec5ecb",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\": \"Producto C\", \"price\": 35.50, \"stock\": 15 }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/products",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products"
+					]
+				},
+				"description": "## **Endpoint: Crear producto (****`POST /api/products`****)**\n\n**Descripción:**\n\nCrea un nuevo producto en el sistema.\n\n**URL:**\n\n```\n/api/products\n\n ```\n\n**Método HTTP:**  \n`POST`\n\n**Middleware / Autenticación:**  \n`auth:sanctum` – requiere token válido (Bearer token).\n\n**Parámetros de Body (JSON):**\n\n| Campo | Tipo | Obligatorio | Descripción |\n| --- | --- | --- | --- |\n| `name` | string | Sí | Nombre del producto, máximo 255 caracteres |\n| `price` | numeric | Sí | Precio del producto, mínimo 0.01 |\n| `stock` | integer | Sí | Cantidad disponible, mínimo 0 |\n\n**Mensajes de validación:**\n\n| Regla | Mensaje |\n| --- | --- |\n| `name.required` | El nombre es obligatorio |\n| `price.required` | El precio es obligatorio |\n| `price.min` | El precio debe ser mayor a 0 |\n| `stock.required` | El stock es obligatorio |\n| `stock.min` | El stock no puede ser negativo |\n\n**Ejemplo de Request (Postman):**\n\n```\nPOST http://127.0.0.1:8000/api/products\nHeaders:\nAuthorization: 1|jTQbFzImnmE5xwB1TEgkDLg9C2S1AlSfQkkdHjpTefec5ecb\nContent-Type: application/json\n\n ```\n\n```\n{\n  \"name\": \"Producto C\",\n  \"price\": 35.5,\n  \"stock\": 15\n}\n\n ```\n\n**Ejemplo de Response 201 Created:**\n\n```\n{\n    \"id\": 21,\n    \"name\": \"Producto C\",\n    \"price\": 35.5,\n    \"stock\": 15,\n    \"created_at\": \"2025-10-26T05:27:14.000000Z\",\n    \"updated_at\": \"2025-10-26T05:27:14.000000Z\"\n}\n\n ```\n\n**Códigos de Respuesta:**\n\n| Código | Descripción |\n| --- | --- |\n| 201 Created | Producto creado correctamente |\n| 422 Unprocessable Entity | Validación fallida, devuelve mensajes de error de `ProductRequest` |\n| 401 Unauthorized | Token faltante o inválido |"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/products/{id}",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 1|jTQbFzImnmE5xwB1TEgkDLg9C2S1AlSfQkkdHjpTefec5ecb",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/products/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						"2"
+					]
+				},
+				"description": "## **Endpoint: Mostrar un producto (**`GET /api/products/{id}`**)**\n\n**Descripción:**\n\nDevuelve los detalles de un producto específico identificado por su `id`.\n\n**URL:**\n\n```\n/api/products/{id}\n\n ```\n\n**Método HTTP:**  \n`GET`\n\n**Middleware / Autenticación:**  \n`auth:sanctum` – requiere token válido (Bearer token).\n\n**Parámetros de URL:**\n\n| Nombre | Tipo | Obligatorio | Descripción |\n| --- | --- | --- | --- |\n| `id` | integer | Sí | ID del producto que se desea consultar |\n\n**Ejemplo de Request (Postman):**\n\n```\nGET http://127.0.0.1:8000/api/products/2\nHeaders:\nAuthorization: Bearer 1|jTQbFzImnmE5xwB1TEgkDLg9C2S1AlSfQkkdHjpTefec5ecb\n\n ```\n\n**Ejemplo de Response 200 OK:**\n\n```\n{\n    \"id\": 2,\n    \"name\": \"ea voluptas\",\n    \"price\": \"1962.84\",\n    \"stock\": 27,\n    \"created_at\": \"2025-10-26T04:29:16.000000Z\",\n    \"updated_at\": \"2025-10-26T04:29:16.000000Z\"\n}\n\n ```\n\n**Códigos de Respuesta:**\n\n| Código | Descripción |\n| --- | --- |\n| 200 OK | Producto encontrado y retornado correctamente |\n| 404 Not Found | No existe un producto con el ID indicado |\n| 401 Unauthorized | Token faltante o inválido |"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/products/{id}",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 1|jTQbFzImnmE5xwB1TEgkDLg9C2S1AlSfQkkdHjpTefec5ecb",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Producto C Actualizado\",\r\n  \"price\": 40.0,\r\n  \"stock\": 20\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/products/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						"2"
+					]
+				},
+				"description": "## **Endpoint: Actualizar producto (**`PUT/PATCH /api/products/{id}`**)**\n\n**Descripción:**\n\nActualiza los datos de un producto existente por su `id`.\n\n**URL:**\n\n```\n/api/products/{id}\n\n ```\n\n**Método HTTP:**  \n`PUT` o `PATCH`\n\n**Middleware / Autenticación:**  \n`auth:sanctum` – requiere token válido (Bearer token).\n\n**Parámetros de URL:**\n\n| Nombre | Tipo | Obligatorio | Descripción |\n| --- | --- | --- | --- |\n| `id` | integer | Sí | ID del producto que se desea actualizar |\n\n**Parámetros Body (JSON):**\n\n| Campo | Tipo | Obligatorio | Descripción |\n| --- | --- | --- | --- |\n| `name` | string | Sí | Nombre del producto, máximo 255 caracteres |\n| `price` | numeric | Sí | Precio del producto, mínimo 0.01 |\n| `stock` | integer | Sí | Cantidad disponible, mínimo 0 |\n\n**Mensajes de validación:**\n\n| Regla | Mensaje |\n| --- | --- |\n| `name.required` | El nombre es obligatorio |\n| `price.required` | El precio es obligatorio |\n| `price.min` | El precio debe ser mayor a 0 |\n| `stock.required` | El stock es obligatorio |\n| `stock.min` | El stock no puede ser negativo |\n\n**Ejemplo de Request (Postman):**\n\n```\nPUT http://127.0.0.1:8000/api/products/2\nHeaders:\nAuthorization: Bearer <TU_TOKEN>\nContent-Type: application/json\n\n ```\n\n```\n{\n  \"name\": \"Producto C Actualizado\",\n  \"price\": 40.0,\n  \"stock\": 20\n}\n\n ```\n\n**Ejemplo de Response 200 OK:**\n\n```\n{\n    \"id\": 2,\n    \"name\": \"Producto C Actualizado\",\n    \"price\": 40.0,\n    \"stock\": 20,\n    \"created_at\": \"2025-10-26T04:29:16.000000Z\",\n    \"updated_at\": \"2025-10-26T06:00:00.000000Z\"\n}\n\n ```\n\n**Códigos de Respuesta:**\n\n| Código | Descripción |\n| --- | --- |\n| 200 OK | Producto actualizado correctamente |\n| 422 Unprocessable Entity | Validación fallida, devuelve mensajes de error de `ProductRequest` |\n| 404 Not Found | No existe un producto con el ID indicado |\n| 401 Unauthorized | Token faltante o inválido |"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/products/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 1|jTQbFzImnmE5xwB1TEgkDLg9C2S1AlSfQkkdHjpTefec5ecb",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/products/4",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						"4"
+					]
+				},
+				"description": "## **Endpoint: Eliminar producto (**`DELETE /api/products/{id}`**)**\n\n**Descripción:**\n\nElimina un producto específico de la base de datos por su `id`.\n\n**URL:**\n\n```\n/api/products/{id}\n\n ```\n\n**Método HTTP:**  \n`DELETE`\n\n**Middleware / Autenticación:**  \n`auth:sanctum` – requiere token válido (Bearer token).\n\n**Parámetros de URL:**\n\n| Nombre | Tipo | Obligatorio | Descripción |\n| --- | --- | --- | --- |\n| `id` | integer | Sí | ID del producto que se desea eliminar |\n\n**Ejemplo de Request (Postman):**\n\n```\nDELETE http://127.0.0.1:8000/api/products/2\nHeaders:\nAuthorization: Bearer <TU_TOKEN>\n\n ```\n\n**Ejemplo de Response 204 No Content:**\n\n- **Status Code:** 204 No Content\n    \n- **Cuerpo de la respuesta:** vacío\n    \n\n**Códigos de Respuesta:**\n\n| Código | Descripción |\n| --- | --- |\n| 204 No Content | Producto eliminado correctamente |\n| 404 Not Found | No existe un producto con el ID indicado |\n| 401 Unauthorized | Token faltante o inválido |"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\": 1,\n    \"products\": [\n        { \"id\": 2, \"quantity\": 3 },\n        { \"id\": 5, \"quantity\": 1 }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/orders",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"orders"
+					]
+				},
+				"description": "## **Endpoint: Crear orden (**`POST /api/orders`**)**\n\n**Descripción:**\n\nCrea una nueva orden para un usuario, descontando stock de los productos seleccionados y calculando el total de la orden.\n\n**URL:**\n\n```\n/api/orders\n\n ```\n\n**Método HTTP:**  \n`POST`\n\n**Middleware / Autenticación:**  \n`auth:sanctum` – requiere token válido (Bearer token).\n\n**Parámetros Body (JSON):**\n\n| Campo | Tipo | Obligatorio | Descripción |\n| --- | --- | --- | --- |\n| `user_id` | integer | Sí | ID del usuario que realiza la orden |\n| `products` | array | Sí | Lista de productos a incluir en la orden |\n| `products[].id` | integer | Sí | ID del producto |\n| `products[].quantity` | integer | Sí | Cantidad deseada de cada producto |\n\n**Ejemplo de Request (Postman):**\n\n```\nPOST http://127.0.0.1:8000/api/orders\nHeaders:\nAuthorization: Bearer <TU_TOKEN>\nContent-Type: application/json\n\n ```\n\n```\n{\n    \"user_id\": 1,\n    \"products\": [\n        { \"id\": 2, \"quantity\": 3 },\n        { \"id\": 5, \"quantity\": 1 }\n    ]\n}\n\n ```\n\n**Ejemplo de Response 200 OK:**\n\n```\n{\n    \"id\": 7,\n    \"user_id\": 1,\n    \"total\": 145.5,\n    \"status\": \"pending\",\n    \"created_at\": \"2025-10-26T06:30:00.000000Z\",\n    \"updated_at\": \"2025-10-26T06:30:00.000000Z\",\n    \"products\": [\n        {\n            \"id\": 2,\n            \"name\": \"Producto A\",\n            \"price\": 30.5,\n            \"stock\": 10,\n            \"pivot\": {\n                \"quantity\": 3,\n                \"subtotal\": 91.5\n            }\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Producto B\",\n            \"price\": 54.0,\n            \"stock\": 5,\n            \"pivot\": {\n                \"quantity\": 1,\n                \"subtotal\": 54.0\n            }\n        }\n    ]\n}\n\n ```\n\n**Códigos de Respuesta:**\n\n| Código | Descripción |\n| --- | --- |\n| 200 OK | Orden creada correctamente, con productos incluidos |\n| 400 Bad Request | Stock insuficiente para algún producto |\n| 422 Unprocessable Entity | Validación de campos fallida |\n| 401 Unauthorized | Token faltante o inválido |\n\n**Notas:**\n\n- Se valida que la cantidad solicitada de cada producto no supere el stock disponible.\n    \n- El stock de los productos se descuenta automáticamente.\n    \n- Se calcula el subtotal por producto y el total de la orden.\n    \n- Se dispara un **job** **`OrderJob`** tras crear la orden (por ejemplo, para notificaciones o procesos posteriores).\n    \n- La respuesta incluye la orden con los productos relacionados (`pivot` indica cantidad y subtotal de cada producto)."
+			},
+			"response": []
+		},
+		{
+			"name": "/api/top-5-products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/top-5-products",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"top-5-products"
+					]
+				},
+				"description": "## **Endpoint: Top 5 productos más vendidos (**`GET /api/top-5-products`**)**\n\n**Descripción:**\n\nDevuelve los 5 productos con mayor cantidad vendida, calculando el total de unidades vendidas en todas las órdenes.\n\n**URL:**\n\n```\n/api/top-5-products\n\n ```\n\n**Método HTTP:**  \n`GET`\n\n**Middleware / Autenticación:**  \n`auth:sanctum` – requiere token válido (Bearer token).\n\n**Parámetros:**\n\n- Ninguno.\n    \n\n**Ejemplo de Request (Postman):**\n\n```\nGET http://127.0.0.1:8000/api/top-5-products\nHeaders:\nAuthorization: Bearer <TU_TOKEN>\n\n ```\n\n**Ejemplo de Response 200 OK:**\n\n```\n[\n    {\n        \"id\": 17,\n        \"name\": \"possimus sit\",\n        \"price\": \"663.81\",\n        \"stock\": 72,\n        \"created_at\": \"2025-10-26T04:29:16.000000Z\",\n        \"updated_at\": \"2025-10-26T04:29:16.000000Z\",\n        \"total_sold\": \"11\"\n    },\n    {\n        \"id\": 8,\n        \"name\": \"quidem laboriosam\",\n        \"price\": \"1923.36\",\n        \"stock\": 20,\n        \"created_at\": \"2025-10-26T04:29:16.000000Z\",\n        \"updated_at\": \"2025-10-26T04:29:16.000000Z\",\n        \"total_sold\": \"9\"\n    },\n    {\n        \"id\": 3,\n        \"name\": \"iure facilis\",\n        \"price\": \"1106.60\",\n        \"stock\": 60,\n        \"created_at\": \"2025-10-26T04:29:16.000000Z\",\n        \"updated_at\": \"2025-10-26T04:29:16.000000Z\",\n        \"total_sold\": \"8\"\n    },\n    {\n        \"id\": 10,\n        \"name\": \"cum saepe\",\n        \"price\": \"1185.50\",\n        \"stock\": 81,\n        \"created_at\": \"2025-10-26T04:29:16.000000Z\",\n        \"updated_at\": \"2025-10-26T04:29:16.000000Z\",\n        \"total_sold\": \"7\"\n    },\n    {\n        \"id\": 18,\n        \"name\": \"minima facere\",\n        \"price\": \"350.30\",\n        \"stock\": 22,\n        \"created_at\": \"2025-10-26T04:29:16.000000Z\",\n        \"updated_at\": \"2025-10-26T04:29:16.000000Z\",\n        \"total_sold\": \"7\"\n    }\n]\n\n ```\n\n**Códigos de Respuesta:**\n\n| Código | Descripción |\n| --- | --- |\n| 200 OK | Devuelve la lista de los 5 productos más vendidos |\n| 401 Unauthorized | Token faltante o inválido |"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/user-orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/user-orders?user_id=2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"user-orders"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "2"
+						}
+					]
+				},
+				"description": "## **Endpoint: Órdenes de un usuario (**`GET /api/user-orders`**)**\n\n**Descripción:**\n\nDevuelve todas las órdenes de un usuario específico, con detalle de productos, cantidad, subtotal y total acumulado de todas las órdenes.\n\n**URL:**\n\n```\n/api/user-orders\n\n ```\n\n**Método HTTP:**  \n`GET`\n\n**Middleware / Autenticación:**  \n`auth:sanctum` – requiere token válido (Bearer token).\n\n**Parámetros Query:**\n\n| Parámetro | Tipo | Obligatorio | Descripción |\n| --- | --- | --- | --- |\n| `user_id` | integer | Sí | ID del usuario cuyas órdenes se desean consultar |\n\n**Ejemplo de Request (Postman):**\n\n```\nGET http://127.0.0.1:8000/api/user-orders?user_id=1\nHeaders:\nAuthorization: Bearer <TU_TOKEN>\n\n ```\n\n**Ejemplo de Response 200 OK:**\n\n```\n{\n    \"user_id\": 1,\n    \"name\": \"Jared Murphy\",\n    \"total_accumulated\": 145.5,\n    \"orders\": [\n        {\n            \"order_id\": 7,\n            \"total\": 91.5,\n            \"status\": \"pending\",\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Producto A\",\n                    \"quantity\": 3,\n                    \"subtotal\": 91.5\n                }\n            ]\n        },\n        {\n            \"order_id\": 8,\n            \"total\": 54.0,\n            \"status\": \"pending\",\n            \"products\": [\n                {\n                    \"id\": 5,\n                    \"name\": \"Producto B\",\n                    \"quantity\": 1,\n                    \"subtotal\": 54.0\n                }\n            ]\n        }\n    ]\n}\n\n ```\n\n**Códigos de Respuesta:**\n\n| Código | Descripción |\n| --- | --- |\n| 200 OK | Órdenes del usuario retornadas correctamente |\n| 404 Not Found | No existe un usuario con el ID indicado |\n| 401 Unauthorized | Token faltante o inválido |"
+			},
+			"response": []
+		}
+	]
+}
