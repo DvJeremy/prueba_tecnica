@@ -67,13 +67,4 @@ class ProductController extends Controller
         return response()->json(null, 204);
     }
 
-    public function topSelling()
-    {
-        $topProducts = Product::withSum('orders as total_sold', 'order_product.quantity')
-            ->orderByDesc('total_sold')
-            ->take(5)
-            ->get();
-
-        return response()->json($topProducts);
-    }
 }
