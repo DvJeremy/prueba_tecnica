@@ -25,7 +25,7 @@ composer install
 
 ## 2. Instalación
 
-1. Crea una base de datos en MySQL, por ejemplo:
+1. Crea una base de datos en MySQL:
 
 CREATE DATABASE marketplace;
 
